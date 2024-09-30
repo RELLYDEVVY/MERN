@@ -54,7 +54,7 @@ app.use((0, express_session_1.default)({
         maxAge: 60 * 60 * 100,
         httpOnly: true,
         secure: validateEnv_1.default.NODE_ENV === "production",
-        sameSite: validateEnv_1.default.NODE_ENV === "production" ? "none" : "lax",
+        sameSite: "none",
     },
     rolling: true,
     store: connect_mongo_1.default.create({

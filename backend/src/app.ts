@@ -29,7 +29,7 @@ app.use(
 			maxAge: 60 * 60 * 100,
 			httpOnly: true,
 			secure: env.NODE_ENV === "production",
-            sameSite: env.NODE_ENV === "production" ? "none" : "lax",
+            sameSite: "none",
 		},
 		rolling: true,
 		store: MongoStore.create({
