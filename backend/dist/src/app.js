@@ -36,25 +36,18 @@ require("dotenv/config");
 const validateEnv_1 = __importDefault(require("../utils/validateEnv"));
 const connect_mongo_1 = __importDefault(require("connect-mongo"));
 const auth_1 = require("./middleware/auth");
-const cors_1 = __importDefault(require("cors"));
 const app = (0, express_1.default)();
-const corsOptions = {
-    origin: validateEnv_1.default.CLIENT_URL || "http://localhost:5173", // Replace with your frontend URL
-    credentials: true,
-    optionsSuccessStatus: 200
-};
-app.use((0, cors_1.default)(corsOptions));
 app.use((0, morgan_1.default)("dev"));
 app.use(express_1.default.json());
-app.set('trust proxy', 1);
 app.use((0, express_session_1.default)({
     secret: validateEnv_1.default.SESSION_SECRET,
     resave: false,
     saveUninitialized: false,
     cookie: {
-        maxAge: 60 * 60 * 100,
+        maxAge: 60 * 60 * 1000, // 1 hour
+        httpOnly: true,
         secure: validateEnv_1.default.NODE_ENV === "production",
-        sameSite: "none",
+        sameSite: 'lax',
     },
     rolling: true,
     store: connect_mongo_1.default.create({

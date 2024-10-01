@@ -8,28 +8,22 @@ import "dotenv/config";
 import env from "../utils/validateEnv";
 import MongoStore from "connect-mongo";
 import { requireAuth } from "./middleware/auth";
-import cors from "cors";
 
 const app = express();
-const corsOptions = {
-    origin: env.CLIENT_URL || "http://localhost:5173", // Replace with your frontend URL
-    credentials: true,
-    optionsSuccessStatus: 200
-};
 
-app.use(cors(corsOptions));
+
 app.use(morgan("dev"));
 app.use(express.json());
-app.set('trust proxy', 1);
 app.use(
 	session({
 		secret: env.SESSION_SECRET,
-		resave: false,
-		saveUninitialized: false,
-		cookie: {
-			maxAge: 60 * 60 * 100,
-			secure: env.NODE_ENV === "production",
-            sameSite: "none",
+        resave: false,
+        saveUninitialized: false,
+        cookie: {
+            maxAge: 60 * 60 * 1000, // 1 hour
+            httpOnly: true,
+            secure: env.NODE_ENV === "production",
+            sameSite: 'lax',
 		},
 		rolling: true,
 		store: MongoStore.create({
