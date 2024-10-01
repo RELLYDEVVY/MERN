@@ -20,6 +20,7 @@ const corsOptions = {
 app.use(cors(corsOptions));
 app.use(morgan("dev"));
 app.use(express.json());
+app.set('trust proxy', 1);
 app.use(
 	session({
 		secret: env.SESSION_SECRET,
@@ -27,7 +28,6 @@ app.use(
 		saveUninitialized: false,
 		cookie: {
 			maxAge: 60 * 60 * 100,
-			httpOnly: true,
 			secure: env.NODE_ENV === "production",
             sameSite: "none",
 		},
