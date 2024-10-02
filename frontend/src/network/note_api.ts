@@ -7,7 +7,7 @@ export interface NoteInput {
 	text: string;
 }
 
-const API_BASE_URL = 'https://mern-ne88.onrender.com';
+const API_BASE_URL = '/api';
 
 const fetchData = async (input: RequestInfo, init?: RequestInit) => {
     const response = await fetch(API_BASE_URL + input, {
